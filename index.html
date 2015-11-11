@@ -11,11 +11,43 @@
 
 	<script src="js/item.js"></script>
     <script>
-        //instantiate some coins
-        var drop1 = new Item();
-        drop1.create();
-        var drop2 = new Item();
-        drop2.create();
+        /* START GAME */
+        //an array to keep track of all the drops
+        var drop_array = new Array();
+        //instantiate one ground at bottom:
+        var ground = new Item("ground",0,500);
+        ground.create();
+        //start a named timer causing drops to generate every so often:
+        //generate every so often:
+        var spawntimer = setInterval(spawnDrop, 1000);
+        //move all the drops every so often
+         var movetimer = setInterval(moveDrops, 1000/30);
+        /* end START GAME */
+        
+        /**
+         * this method instantiates one raindrop
+         */
+        function spawnDrop(){
+        var another_drop = new Item("raindrop",Math.floor(Math.random()*720), -50);
+        another_drop.create();
+        //store it in the array
+        drop_array.push(another_drop);
+        }
+        /**
+         * this method loops through all raindrops in the drop array,
+         * adding a little to their y position
+         */
+        function moveDrops(){
+            for(var i=0; i<drop_array.length; i++){
+                drop_array[i].y +=3;
+                drop_array[i].item_on_page.style.top = drop_array[i].y + "px";
+                //if drop is too far down...
+            if(drop_array[i].y > 500){
+                //destroy it
+                drop_array[i].destroy();
+                }//end "if drop too far down"
+            }//end "for loop"
+        }//end "moveDrops()"
     </script>
 </body>
 </html>
