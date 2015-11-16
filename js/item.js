@@ -7,10 +7,13 @@
  * @param xpos  int - horizontal starting position
  * @param ypos  int - vertical starting position
  */
-function Item(cl, xpos, ypos){
+function Item(cl, xpos, ypos, w, h){
 	//properties to let each item store its own x/y position
 	this.x = xpos; 
 	this.y = ypos;
+	//its widht and height
+	this.width = w;
+	this.height = h;
 	//property that keeps track of the item's visual
 	this.item_on_page;
 	/**
@@ -29,7 +32,9 @@ function Item(cl, xpos, ypos){
 	 * The destroy method removes the item from the game
 	 */ 
 	 this.destroy = function(){
+		 //begin "if it's a raindrop, add a splash & remove it from the array"
          //assign an animating GIF where the drop is
+		 if(this.item_on_page.className == "raindrop"){
          var newsplash = document.createElement("img");
          newsplash.src = "img/splash.gif?"+Math.random();
          newsplash.style.position = "absolute";
@@ -41,7 +46,8 @@ function Item(cl, xpos, ypos){
          //to remove an item from array: splice(index,howMany);
          drop_array.splice(index_num,1);
 		 //remove div as a child of the body
+	 }//end "if it's a raindrop, add a splash & remove it from the array"
 		 document.body.removeChild(this.item_on_page);
-	 }//end function destroy()
+}//end function destroy()
 
 }//end the Item class
